@@ -81,11 +81,21 @@ export default function PressScene() {
     <meshStandardMaterial color="#888890" metalness={0.7} roughness={0.35} />
   ), []);
 
-  // M shape: two vertical legs + two diagonals meeting at center valley
-  // The diagonals go DOWN from the leg tops to a center valley point
+  // M shape built with exact coordinates
+  // Legs at x = ±0.5, full height. Diagonals connect leg tops to center valley.
   const barW = 0.18;
   const barD = 0.28;
-  const h = mHeight;
+  const h = mHeight; // 0.9
+  const halfH = h / 2;
+  const legX = 0.5;        // leg center X
+  const valleyY = -0.15;   // valley center Y (relative to group center, slightly below middle)
+  const topY = halfH;      // top of legs Y (relative to group center)
+
+  // Diagonal from top of left leg (−legX, topY) to center valley (0, valleyY)
+  const dx = legX;          // horizontal distance: 0.5
+  const dy = topY - valleyY; // vertical distance
+  const diagLen = Math.sqrt(dx * dx + dy * dy);
+  const diagAngle = Math.atan2(dx, dy); // angle from vertical
 
   return (
     <group position={[0, -0.6, 0]}>
@@ -98,22 +108,28 @@ export default function PressScene() {
       {/* Letter M (crushable) — origin at center, scaled from bottom via position update */}
       <group ref={letterRef} position={[0, mBottom + h / 2, 0]}>
         {/* Left leg */}
-        <mesh position={[-0.5, 0, 0]}>
+        <mesh position={[-legX, 0, 0]}>
           <boxGeometry args={[barW, h, barD]} />
           {accentMat}
         </mesh>
-        {/* Left diagonal — goes from top-left DOWN to center valley */}
-        <mesh position={[-0.25, 0.1, 0]} rotation={[0, 0, 0.45]}>
-          <boxGeometry args={[barW, h * 0.6, barD]} />
+        {/* Left diagonal — from top of left leg to center valley */}
+        <mesh
+          position={[-legX / 2, (topY + valleyY) / 2, 0]}
+          rotation={[0, 0, diagAngle]}
+        >
+          <boxGeometry args={[barW, diagLen, barD]} />
           {accentMat}
         </mesh>
-        {/* Right diagonal — goes from top-right DOWN to center valley */}
-        <mesh position={[0.25, 0.1, 0]} rotation={[0, 0, -0.45]}>
-          <boxGeometry args={[barW, h * 0.6, barD]} />
+        {/* Right diagonal — from top of right leg to center valley */}
+        <mesh
+          position={[legX / 2, (topY + valleyY) / 2, 0]}
+          rotation={[0, 0, -diagAngle]}
+        >
+          <boxGeometry args={[barW, diagLen, barD]} />
           {accentMat}
         </mesh>
         {/* Right leg */}
-        <mesh position={[0.5, 0, 0]}>
+        <mesh position={[legX, 0, 0]}>
           <boxGeometry args={[barW, h, barD]} />
           {accentMat}
         </mesh>
