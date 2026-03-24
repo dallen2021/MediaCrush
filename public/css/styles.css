@@ -131,8 +131,40 @@ header {
   gap: 12px;
 }
 
-.header-icon {
+/* Animated Logo */
+.header-logo {
   flex-shrink: 0;
+  overflow: visible;
+}
+
+.press-arm {
+  animation: press-down 4s ease-in-out infinite;
+}
+
+.crush-letter {
+  transform-origin: 40px 70px;
+  animation: letter-crush 4s ease-in-out infinite;
+}
+
+@keyframes press-down {
+  0%, 15%  { transform: translateY(0); }
+  35%, 50% { transform: translateY(19px); }
+  70%, 100% { transform: translateY(0); }
+}
+
+@keyframes letter-crush {
+  0%, 15%  { transform: scaleY(1); }
+  28%      { transform: scaleY(0.85); }
+  35%, 78% { transform: scaleY(0.05); }
+  92%      { transform: scaleY(1.06); }
+  100%     { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press-arm,
+  .crush-letter {
+    animation: none;
+  }
 }
 
 header h1 {
