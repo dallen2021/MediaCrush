@@ -78,7 +78,7 @@ export default function PressScene() {
   ), [accentColor]);
 
   const metalMat = useMemo(() => (
-    <meshStandardMaterial color="#444458" metalness={0.8} roughness={0.3} />
+    <meshStandardMaterial color="#888890" metalness={0.7} roughness={0.35} />
   ), []);
 
   // M shape: two vertical legs + two diagonals meeting at center valley
@@ -134,7 +134,7 @@ export default function PressScene() {
         {/* Hydraulic cylinder */}
         <mesh position={[0, 1.4, 0]}>
           <cylinderGeometry args={[0.18, 0.18, 0.3, 8]} />
-          <meshStandardMaterial color="#555570" metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial color="#9a9aa0" metalness={0.6} roughness={0.3} />
         </mesh>
       </group>
     </group>
