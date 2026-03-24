@@ -1,7 +1,6 @@
 // upload.js — Drag-and-drop, file selection, and file utilities (ES module)
 
-const MAX_IMAGE_SIZE = 50 * 1024 * 1024;   // 50 MB
-const MAX_VIDEO_SIZE = 500 * 1024 * 1024;   // 500 MB
+const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024;   // 2 GB
 
 /**
  * Initialize the upload zone with drag-and-drop and click-to-browse.
@@ -71,13 +70,8 @@ function validateFile(file) {
     return null;
   }
 
-  if (isImage && file.size > MAX_IMAGE_SIZE) {
-    dispatchError('Image files must be under 50 MB.');
-    return null;
-  }
-
-  if (isVideo && file.size > MAX_VIDEO_SIZE) {
-    dispatchError('Video files must be under 500 MB.');
+  if (file.size > MAX_FILE_SIZE) {
+    dispatchError('Files must be under 2 GB.');
     return null;
   }
 
