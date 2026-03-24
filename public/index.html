@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaCrush</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-brand">
+      <svg class="header-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 8L16 4L25 8L16 12L7 8Z" fill="var(--accent)" opacity="0.9"/>
+        <path d="M7 14L16 10L25 14L16 18L7 14Z" fill="var(--accent)" opacity="0.6"/>
+        <path d="M7 20L16 16L25 20L16 24L7 20Z" fill="var(--accent)" opacity="0.35"/>
+        <path d="M12 2L12 6M20 2L20 6" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M12 26L12 30M20 26L20 30" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M14 4L16 2L18 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 28L16 30L18 28" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1>MediaCrush</h1>
+    </div>
+    <p class="header-subtitle">Compress images &amp; videos locally</p>
+  </header>
+
+  <main>
+
+    <!-- Upload Zone -->
+    <section id="upload-zone" class="panel">
+      <svg class="upload-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 30V10" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M17 17L24 10L31 17" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 28V34C8 36.2091 9.79086 38 12 38H36C38.2091 38 40 36.2091 40 34V28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <p class="upload-primary">Drop your file here</p>
+      <p class="upload-secondary">or click to browse</p>
+      <p class="upload-formats">JPEG, PNG, WebP, AVIF, MP4, MOV, AVI, MKV</p>
+      <input type="file" id="file-input" accept="image/*,video/*" hidden>
+    </section>
+
+    <!-- Settings Panel -->
+    <section id="settings-panel" class="panel hidden">
+
+      <!-- File Info Bar -->
+      <div id="file-info" class="file-info">
+        <div id="file-thumbnail" class="file-thumbnail"></div>
+        <div class="file-meta">
+          <span id="file-name" class="file-name">filename.jpg</span>
+          <span id="file-size" class="file-size">2.4 MB</span>
+        </div>
+        <span id="file-type-badge" class="file-type-badge">JPEG</span>
+      </div>
+
+      <!-- Image Settings -->
+      <div id="image-settings" class="settings-group">
+        <div class="setting-row">
+          <label for="format-select" class="setting-label">Output Format</label>
+          <select id="format-select" class="format-select">
+            <option value="original">Keep Original</option>
+            <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+            <option value="avif">AVIF</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label">Quality</label>
+          <div id="quality-presets" class="segmented-control">
+            <button type="button" class="seg-btn" data-quality="40">Low</button>
+            <button type="button" class="seg-btn" data-quality="60">Medium</button>
+            <button type="button" class="seg-btn active" data-quality="80">High</button>
+            <button type="button" class="seg-btn" data-quality="custom">Custom</button>
+          </div>
+        </div>
+
+        <div class="setting-row slider-row">
+          <input type="range" id="quality-slider" class="quality-slider" min="1" max="100" value="80">
+          <span id="quality-value" class="quality-value">80</span>
+        </div>
+      </div>
+
+      <!-- Video Settings -->
+      <div id="video-settings" class="settings-group hidden">
+        <div class="setting-row">
+          <label class="setting-label">Preset</label>
+          <div id="video-presets" class="segmented-control">
+            <button type="button" class="seg-btn" data-preset="low">Low</button>
+            <button type="button" class="seg-btn active" data-preset="medium">Medium</button>
+            <button type="button" class="seg-btn" data-preset="high">High</button>
+            <button type="button" class="seg-btn" data-preset="custom">Custom</button>
+          </div>
+        </div>
+
+        <div id="video-custom-options" class="video-custom-options hidden">
+          <div class="setting-row">
+            <label for="video-bitrate" class="setting-label">Video Bitrate (kbps)</label>
+            <input type="number" id="video-bitrate" class="text-input" placeholder="2000" min="100" max="50000">
+          </div>
+          <div class="setting-row">
+            <label for="audio-bitrate" class="setting-label">Audio Bitrate</label>
+            <select id="audio-bitrate" class="format-select">
+              <option value="64">64 kbps</option>
+              <option value="128" selected>128 kbps</option>
+              <option value="192">192 kbps</option>
+              <option value="256">256 kbps</option>
+              <option value="320">320 kbps</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label for="video-resolution" class="setting-label">Resolution</label>
+            <select id="video-resolution" class="format-select">
+              <option value="original">Keep Original</option>
+              <option value="2160">4K (2160p)</option>
+              <option value="1440">1440p</option>
+              <option value="1080">1080p</option>
+              <option value="720">720p</option>
+              <option value="480">480p</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" id="compress-btn" class="compress-btn">Compress</button>
+    </section>
+
+    <!-- Progress Panel -->
+    <section id="progress-panel" class="panel hidden">
+      <p class="progress-status">Compressing...</p>
+      <div id="progress-bar" class="progress-bar">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+      <p id="progress-text" class="progress-text">0%</p>
+    </section>
+
+    <!-- Results Panel -->
+    <section id="results-panel" class="panel hidden">
+      <div id="savings-badge" class="savings-badge">-0%</div>
+
+      <div class="results-cards">
+        <div id="original-card" class="result-card">
+          <span class="card-label">Original</span>
+          <span class="card-filename">file.jpg</span>
+          <span class="card-size">2.4 MB</span>
+          <span class="card-dimensions">1920 x 1080</span>
+        </div>
+        <div id="compressed-card" class="result-card">
+          <span class="card-label">Compressed</span>
+          <span class="card-filename">file.webp</span>
+          <span class="card-size">980 KB</span>
+          <span class="card-dimensions">1920 x 1080</span>
+          <span class="card-format">WebP</span>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <button type="button" id="download-btn" class="btn-download">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5 9L9 13L13 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 15H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          Download
+        </button>
+        <button type="button" id="reset-btn" class="btn-reset">Compress Another</button>
+      </div>
+    </section>
+
+    <!-- Error Toast -->
+    <div id="error-toast" class="error-toast hidden">Error message here</div>
+
+  </main>
+
+  <footer>
+    <p>MediaCrush &mdash; Local compression, no uploads to the cloud</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
