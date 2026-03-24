@@ -28,7 +28,9 @@ router.get('/download/:id', (req, res) => {
     // Build a user-friendly download filename
     const ext = path.extname(job.outputPath);
     const baseName = path.basename(job.originalName, path.extname(job.originalName));
-    const downloadName = `compressed_${baseName}${ext}`;
+    const downloadName = job.jobType === 'convert'
+      ? `${baseName}${ext}`
+      : `compressed_${baseName}${ext}`;
 
     res.download(job.outputPath, downloadName, (err) => {
       if (err) {

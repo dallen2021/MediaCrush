@@ -78,6 +78,7 @@ router.post('/convert', upload.single('file'), async (req, res) => {
       originalName: originalname,
       originalSize,
       mimeType: mimetype,
+      jobType: 'convert',
     });
 
     const outputPath = getCompressedPath(job.id, outputExt);
