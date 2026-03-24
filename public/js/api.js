@@ -73,3 +73,29 @@ export function subscribeProgress(jobId, onProgress, onComplete, onError) {
 export function getDownloadUrl(jobId) {
   return `/api/download/${jobId}`;
 }
+
+/**
+ * Send a file to the server for format conversion.
+ * Same interface as compressFile but hits /api/convert.
+ * @param {File} file - The file to convert
+ * @param {Object} options - Conversion options (targetFormat, etc.)
+ * @returns {Promise<Object>} - Server response JSON
+ */
+export async function convertFile(file, options) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('options', JSON.stringify(options));
+
+  const response = await fetch('/api/convert', {
+    method: 'POST',
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || `Server error (${response.status})`);
+  }
+
+  return data;
+}

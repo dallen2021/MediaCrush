@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const compressRoutes = require('./routes/compress');
+const convertRoutes = require('./routes/convert');
 const downloadRoutes = require('./routes/download');
 const { startCleanupJob } = require('./utils/fileUtils');
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // API routes
 // ---------------------------------------------------------------------------
 app.use('/api', compressRoutes);
+app.use('/api', convertRoutes);
 app.use('/api', downloadRoutes);
 
 // ---------------------------------------------------------------------------

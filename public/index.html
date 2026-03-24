@@ -11,8 +11,8 @@
 </head>
 <body>
 
-  <header>
-    <div class="header-brand">
+  <nav class="sidebar">
+    <div class="sidebar-brand">
       <svg class="header-logo" viewBox="0 0 80 90" width="48" height="54" xmlns="http://www.w3.org/2000/svg">
         <!-- Hydraulic cylinder (fixed frame) -->
         <rect x="33" y="0" width="14" height="7" fill="#44445a" rx="2.5"/>
@@ -56,187 +56,286 @@
         <polygon points="15,82 40,90 40,94 15,86" fill="#161628"/>
         <polygon points="40,90 65,82 65,86 40,94" fill="#1a1a30"/>
       </svg>
-      <h1>MediaCrush</h1>
+      <span class="brand-name">MediaCrush</span>
     </div>
-    <p class="header-subtitle">Compress images &amp; videos locally</p>
-  </header>
+
+    <div class="sidebar-nav">
+      <button class="nav-item active" data-page="compress">
+        <svg class="nav-icon" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h12M4 14h12M8 2v4M12 2v4M8 14v4M12 14v4"/>
+        </svg>
+        <span>Compress</span>
+      </button>
+      <button class="nav-item" data-page="convert">
+        <svg class="nav-icon" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8l4-4 4 4M8 4v10M16 12l-4 4-4-4M12 16V6"/>
+        </svg>
+        <span>Convert</span>
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <p>Local processing<br>No cloud uploads</p>
+    </div>
+  </nav>
 
   <main>
 
-    <!-- Upload Zone -->
-    <section id="upload-zone" class="panel">
-      <svg class="upload-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24 30V10" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M17 17L24 10L31 17" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 28V34C8 36.2091 9.79086 38 12 38H36C38.2091 38 40 36.2091 40 34V28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-      <p class="upload-primary">Drop your file here</p>
-      <p class="upload-secondary">or click to browse</p>
-      <p class="upload-formats">JPEG, PNG, WebP, AVIF, MP4, MOV, AVI, MKV</p>
-      <input type="file" id="file-input" accept="image/*,video/*" hidden>
-    </section>
+    <!-- COMPRESS PAGE -->
+    <div id="page-compress" class="page">
 
-    <!-- Settings Panel -->
-    <section id="settings-panel" class="panel hidden">
+      <!-- Upload Zone -->
+      <section id="upload-zone" class="panel">
+        <svg class="upload-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 30V10" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M17 17L24 10L31 17" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 28V34C8 36.2091 9.79086 38 12 38H36C38.2091 38 40 36.2091 40 34V28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <p class="upload-primary">Drop your file here</p>
+        <p class="upload-secondary">or click to browse</p>
+        <p class="upload-formats">JPEG, PNG, WebP, AVIF, MP4, MOV, AVI, MKV</p>
+        <input type="file" id="file-input" accept="image/*,video/*" hidden>
+      </section>
 
-      <!-- File Info Bar -->
-      <div id="file-info" class="file-info">
-        <div id="file-thumbnail" class="file-thumbnail"></div>
-        <div class="file-meta">
-          <span id="file-name" class="file-name">filename.jpg</span>
-          <span id="file-size" class="file-size">2.4 MB</span>
+      <!-- Settings Panel -->
+      <section id="settings-panel" class="panel hidden">
+
+        <!-- File Info Bar -->
+        <div id="file-info" class="file-info">
+          <div id="file-thumbnail" class="file-thumbnail"></div>
+          <div class="file-meta">
+            <span id="file-name" class="file-name">filename.jpg</span>
+            <span id="file-size" class="file-size">2.4 MB</span>
+          </div>
+          <span id="file-type-badge" class="file-type-badge">JPEG</span>
         </div>
-        <span id="file-type-badge" class="file-type-badge">JPEG</span>
-      </div>
 
-      <!-- Target Size (Platform Presets) -->
-      <div class="settings-section">
+        <!-- Target Size (Platform Presets) -->
+        <div class="settings-section">
+          <div class="section-header">
+            <h3 class="section-title">Compress For</h3>
+            <span class="section-subtitle">Select a platform to auto-target its file size limit</span>
+          </div>
+          <div id="platform-grid" class="platform-grid">
+            <!-- Buttons rendered by JS -->
+          </div>
+          <div id="target-info" class="target-info hidden">
+            <span class="target-label">Target size:</span>
+            <span id="target-size-display" class="target-size-value">10 MB</span>
+            <button type="button" id="clear-target" class="clear-target-btn">Clear</button>
+          </div>
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <!-- Section header for manual settings -->
         <div class="section-header">
-          <h3 class="section-title">Compress For</h3>
-          <span class="section-subtitle">Select a platform to auto-target its file size limit</span>
-        </div>
-        <div id="platform-grid" class="platform-grid">
-          <!-- Buttons rendered by JS -->
-        </div>
-        <div id="target-info" class="target-info hidden">
-          <span class="target-label">Target size:</span>
-          <span id="target-size-display" class="target-size-value">10 MB</span>
-          <button type="button" id="clear-target" class="clear-target-btn">Clear</button>
-        </div>
-      </div>
-
-      <div class="settings-divider"></div>
-
-      <!-- Section header for manual settings -->
-      <div class="section-header">
-        <h3 class="section-title">Manual Settings</h3>
-        <span class="section-subtitle">Or fine-tune compression manually</span>
-      </div>
-
-      <!-- Image Settings -->
-      <div id="image-settings" class="settings-group">
-        <div class="setting-row">
-          <label for="format-select" class="setting-label">Output Format</label>
-          <select id="format-select" class="format-select">
-            <option value="original">Keep Original</option>
-            <option value="jpeg">JPEG</option>
-            <option value="png">PNG</option>
-            <option value="webp">WebP</option>
-            <option value="avif">AVIF</option>
-          </select>
+          <h3 class="section-title">Manual Settings</h3>
+          <span class="section-subtitle">Or fine-tune compression manually</span>
         </div>
 
-        <div class="setting-row">
-          <label class="setting-label">Quality</label>
-          <div id="quality-presets" class="segmented-control">
-            <button type="button" class="seg-btn" data-quality="40">Low</button>
-            <button type="button" class="seg-btn" data-quality="60">Medium</button>
-            <button type="button" class="seg-btn active" data-quality="80">High</button>
-            <button type="button" class="seg-btn" data-quality="custom">Custom</button>
-          </div>
-        </div>
-
-        <div class="setting-row slider-row">
-          <input type="range" id="quality-slider" class="quality-slider" min="1" max="100" value="80">
-          <span id="quality-value" class="quality-value">80</span>
-        </div>
-      </div>
-
-      <!-- Video Settings -->
-      <div id="video-settings" class="settings-group hidden">
-        <div class="setting-row">
-          <label class="setting-label">Preset</label>
-          <div id="video-presets" class="segmented-control">
-            <button type="button" class="seg-btn" data-preset="low">Low</button>
-            <button type="button" class="seg-btn active" data-preset="medium">Medium</button>
-            <button type="button" class="seg-btn" data-preset="high">High</button>
-            <button type="button" class="seg-btn" data-preset="custom">Custom</button>
-          </div>
-        </div>
-
-        <div id="video-custom-options" class="video-custom-options hidden">
+        <!-- Image Settings -->
+        <div id="image-settings" class="settings-group">
           <div class="setting-row">
-            <label for="video-bitrate" class="setting-label">Video Bitrate (kbps)</label>
-            <input type="number" id="video-bitrate" class="text-input" placeholder="2000" min="100" max="50000">
-          </div>
-          <div class="setting-row">
-            <label for="audio-bitrate" class="setting-label">Audio Bitrate</label>
-            <select id="audio-bitrate" class="format-select">
-              <option value="64">64 kbps</option>
-              <option value="128" selected>128 kbps</option>
-              <option value="192">192 kbps</option>
-              <option value="256">256 kbps</option>
-              <option value="320">320 kbps</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <label for="video-resolution" class="setting-label">Resolution</label>
-            <select id="video-resolution" class="format-select">
+            <label for="format-select" class="setting-label">Output Format</label>
+            <select id="format-select" class="format-select">
               <option value="original">Keep Original</option>
-              <option value="2160">4K (2160p)</option>
-              <option value="1440">1440p</option>
-              <option value="1080">1080p</option>
-              <option value="720">720p</option>
-              <option value="480">480p</option>
+              <option value="jpeg">JPEG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+              <option value="avif">AVIF</option>
             </select>
           </div>
+
+          <div class="setting-row">
+            <label class="setting-label">Quality</label>
+            <div id="quality-presets" class="segmented-control">
+              <button type="button" class="seg-btn" data-quality="40">Low</button>
+              <button type="button" class="seg-btn" data-quality="60">Medium</button>
+              <button type="button" class="seg-btn active" data-quality="80">High</button>
+              <button type="button" class="seg-btn" data-quality="custom">Custom</button>
+            </div>
+          </div>
+
+          <div class="setting-row slider-row">
+            <input type="range" id="quality-slider" class="quality-slider" min="1" max="100" value="80">
+            <span id="quality-value" class="quality-value">80</span>
+          </div>
         </div>
-      </div>
 
-      <button type="button" id="compress-btn" class="compress-btn">Compress</button>
-    </section>
+        <!-- Video Settings -->
+        <div id="video-settings" class="settings-group hidden">
+          <div class="setting-row">
+            <label class="setting-label">Preset</label>
+            <div id="video-presets" class="segmented-control">
+              <button type="button" class="seg-btn" data-preset="low">Low</button>
+              <button type="button" class="seg-btn active" data-preset="medium">Medium</button>
+              <button type="button" class="seg-btn" data-preset="high">High</button>
+              <button type="button" class="seg-btn" data-preset="custom">Custom</button>
+            </div>
+          </div>
 
-    <!-- Progress Panel -->
-    <section id="progress-panel" class="panel hidden">
-      <p class="progress-status">Compressing...</p>
-      <div id="progress-bar" class="progress-bar">
-        <div id="progress-fill" class="progress-fill"></div>
-      </div>
-      <p id="progress-text" class="progress-text">0%</p>
-    </section>
-
-    <!-- Results Panel -->
-    <section id="results-panel" class="panel hidden">
-      <div id="savings-badge" class="savings-badge">-0%</div>
-
-      <div class="results-cards">
-        <div id="original-card" class="result-card">
-          <span class="card-label">Original</span>
-          <span class="card-filename">file.jpg</span>
-          <span class="card-size">2.4 MB</span>
-          <span class="card-dimensions">1920 x 1080</span>
+          <div id="video-custom-options" class="video-custom-options hidden">
+            <div class="setting-row">
+              <label for="video-bitrate" class="setting-label">Video Bitrate (kbps)</label>
+              <input type="number" id="video-bitrate" class="text-input" placeholder="2000" min="100" max="50000">
+            </div>
+            <div class="setting-row">
+              <label for="audio-bitrate" class="setting-label">Audio Bitrate</label>
+              <select id="audio-bitrate" class="format-select">
+                <option value="64">64 kbps</option>
+                <option value="128" selected>128 kbps</option>
+                <option value="192">192 kbps</option>
+                <option value="256">256 kbps</option>
+                <option value="320">320 kbps</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <label for="video-resolution" class="setting-label">Resolution</label>
+              <select id="video-resolution" class="format-select">
+                <option value="original">Keep Original</option>
+                <option value="2160">4K (2160p)</option>
+                <option value="1440">1440p</option>
+                <option value="1080">1080p</option>
+                <option value="720">720p</option>
+                <option value="480">480p</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div id="compressed-card" class="result-card">
-          <span class="card-label">Compressed</span>
-          <span class="card-filename">file.webp</span>
-          <span class="card-size">980 KB</span>
-          <span class="card-dimensions">1920 x 1080</span>
-          <span class="card-format">WebP</span>
-        </div>
-      </div>
 
-      <div class="results-actions">
-        <button type="button" id="download-btn" class="btn-download">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 3V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M5 9L9 13L13 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M3 15H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <button type="button" id="compress-btn" class="compress-btn">Compress</button>
+      </section>
+
+      <!-- Progress Panel -->
+      <section id="progress-panel" class="panel hidden">
+        <p class="progress-status">Compressing...</p>
+        <div id="progress-bar" class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <p id="progress-text" class="progress-text">0%</p>
+      </section>
+
+      <!-- Results Panel -->
+      <section id="results-panel" class="panel hidden">
+        <div id="savings-badge" class="savings-badge">-0%</div>
+
+        <div class="results-cards">
+          <div id="original-card" class="result-card">
+            <span class="card-label">Original</span>
+            <span class="card-filename">file.jpg</span>
+            <span class="card-size">2.4 MB</span>
+            <span class="card-dimensions">1920 x 1080</span>
+          </div>
+          <div id="compressed-card" class="result-card">
+            <span class="card-label">Compressed</span>
+            <span class="card-filename">file.webp</span>
+            <span class="card-size">980 KB</span>
+            <span class="card-dimensions">1920 x 1080</span>
+            <span class="card-format">WebP</span>
+          </div>
+        </div>
+
+        <div class="results-actions">
+          <button type="button" id="download-btn" class="btn-download">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 3V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M5 9L9 13L13 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 15H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Download
+          </button>
+          <button type="button" id="reset-btn" class="btn-reset">Compress Another</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- CONVERT PAGE -->
+    <div id="page-convert" class="page hidden">
+
+      <section id="convert-upload-zone" class="panel upload-zone-panel">
+        <svg class="upload-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <path d="M14 24h20M24 14v20" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="6" y="6" width="36" height="36" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        </svg>
+        <p class="upload-primary">Drop a file to convert</p>
+        <p class="upload-secondary">or click to browse</p>
+        <p class="upload-formats">Images, Videos, and Audio files supported</p>
+        <input type="file" id="convert-file-input" accept="image/*,video/*,audio/*" hidden>
+      </section>
+
+      <section id="convert-settings" class="panel hidden">
+        <div class="file-info">
+          <div id="convert-file-thumbnail" class="file-thumbnail"></div>
+          <div class="file-meta">
+            <span id="convert-file-name" class="file-name"></span>
+            <span id="convert-file-size" class="file-size"></span>
+          </div>
+          <span id="convert-current-format" class="file-type-badge"></span>
+        </div>
+
+        <div class="section-header">
+          <h3 class="section-title">Convert To</h3>
+          <span class="section-subtitle">Select your target format</span>
+        </div>
+
+        <div id="convert-format-grid" class="format-grid">
+          <!-- Rendered by JS based on file type -->
+        </div>
+
+        <button type="button" id="convert-btn" class="compress-btn" disabled>Select a format</button>
+      </section>
+
+      <section id="convert-progress" class="panel hidden">
+        <p class="progress-status">Converting...</p>
+        <div class="progress-bar">
+          <div id="convert-progress-fill" class="progress-fill"></div>
+        </div>
+        <p id="convert-progress-text" class="progress-text">0%</p>
+      </section>
+
+      <section id="convert-results" class="panel hidden">
+        <div id="convert-format-badge" class="format-change-badge">
+          <span class="from-format">MKV</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 10h12M12 6l4 4-4 4"/>
           </svg>
-          Download
-        </button>
-        <button type="button" id="reset-btn" class="btn-reset">Compress Another</button>
-      </div>
-    </section>
+          <span class="to-format">MP4</span>
+        </div>
 
-    <!-- Error Toast -->
-    <div id="error-toast" class="error-toast hidden">Error message here</div>
+        <div class="results-cards">
+          <div id="convert-original-card" class="result-card">
+            <span class="card-label">Original</span>
+            <span class="card-filename"></span>
+            <span class="card-size"></span>
+          </div>
+          <div id="convert-converted-card" class="result-card">
+            <span class="card-label">Converted</span>
+            <span class="card-filename"></span>
+            <span class="card-size"></span>
+            <span class="card-format"></span>
+          </div>
+        </div>
+
+        <div class="results-actions">
+          <button type="button" id="convert-download-btn" class="btn-download">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 3V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M5 9L9 13L13 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 15H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Download
+          </button>
+          <button type="button" id="convert-reset-btn" class="btn-reset">Convert Another</button>
+        </div>
+      </section>
+
+    </div>
 
   </main>
 
-  <footer>
-    <p>MediaCrush &mdash; Local compression, no uploads to the cloud</p>
-  </footer>
-
+  <div id="error-toast" class="error-toast hidden">Error message here</div>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
