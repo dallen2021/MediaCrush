@@ -1,0 +1,22 @@
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+.label { margin: 0 0 16px; text-align: center; font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.track { width: 100%; height: 6px; border-radius: 3px; background: var(--bg-surface); overflow: hidden; }
+.fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  position: relative;
+}
+.fill::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.percent { margin: 12px 0 0; text-align: center; font-family: var(--font-mono); font-size: 14px; color: var(--text-secondary); }

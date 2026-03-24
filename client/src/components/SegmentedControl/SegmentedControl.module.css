@@ -1,0 +1,8 @@
+.control { display: flex; background: var(--bg-surface); border-radius: 100px; padding: 3px; }
+.btn {
+  flex: 1; padding: 8px 14px; font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  color: var(--text-secondary); background: transparent; border: none; border-radius: 100px;
+  cursor: pointer; transition: all 200ms ease; white-space: nowrap;
+}
+.btn:hover { color: var(--text-primary); }
+.btn.active { color: #fff; background: var(--accent); box-shadow: 0 2px 8px var(--accent-glow); }

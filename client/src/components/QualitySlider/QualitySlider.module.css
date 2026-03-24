@@ -1,0 +1,14 @@
+.row { display: flex; align-items: center; gap: 14px; }
+.slider {
+  -webkit-appearance: none; appearance: none; flex: 1; height: 4px;
+  border-radius: 2px; background: var(--bg-surface); outline: none; cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); border: none; margin-top: -7px; cursor: pointer;
+  transition: box-shadow 200ms ease;
+}
+.slider:hover::-webkit-slider-thumb { box-shadow: 0 0 0 6px var(--accent-glow); }
+.slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; }
+.slider::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+.value { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); min-width: 32px; text-align: right; }

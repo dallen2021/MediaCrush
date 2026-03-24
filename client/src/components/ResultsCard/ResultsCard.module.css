@@ -1,0 +1,26 @@
+.panel { background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-md); text-align: center; }
+.savingsBadge { display: inline-block; font-family: var(--font-mono); font-size: 22px; font-weight: 600; color: #fff; padding: 6px 20px; border-radius: 100px; margin: 0 auto 24px; box-shadow: 0 0 20px var(--accent-glow); }
+.good { background: var(--success); }
+.moderate { background: var(--warning); color: #1a1a2e; }
+.bad { background: var(--error); }
+.formatBadge { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 24px; font-family: var(--font-mono); font-size: 16px; font-weight: 600; }
+.fromFmt { color: var(--text-muted); text-transform: uppercase; padding: 4px 12px; background: var(--bg-surface); border-radius: var(--radius-sm); }
+.toFmt { color: var(--accent); text-transform: uppercase; padding: 4px 12px; background: var(--accent-subtle); border-radius: var(--radius-sm); }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; text-align: left; }
+.card { background: var(--bg-card); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 6px; border: 1px solid rgba(255,255,255,0.04); }
+.cardLabel { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; }
+.cardName { font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cardSize { font-family: var(--font-mono); font-size: 20px; font-weight: 500; color: var(--text-primary); }
+.cardDims { font-size: 12px; color: var(--text-secondary); }
+.cardFmt { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--accent); letter-spacing: 0.04em; }
+.actions { display: flex; gap: 12px; justify-content: center; }
+.downloadBtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; font-size: 15px; font-weight: 600; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-hover)); border: none; border-radius: var(--radius-md); cursor: pointer; text-decoration: none; transition: all 200ms ease; }
+.downloadBtn:hover { box-shadow: 0 0 24px var(--accent-glow); }
+.resetBtn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--accent); background: transparent; border: 1.5px solid var(--accent); border-radius: var(--radius-md); cursor: pointer; transition: all 200ms ease; }
+.resetBtn:hover { background: var(--accent-subtle); }
+
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
+  .actions { flex-direction: column; }
+  .downloadBtn, .resetBtn { width: 100%; justify-content: center; }
+}

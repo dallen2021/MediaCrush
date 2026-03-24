@@ -1,0 +1,16 @@
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.btn {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 8px; background: var(--bg-surface); border: 1.5px solid transparent;
+  border-radius: var(--radius-md); cursor: pointer; transition: all 200ms ease;
+  color: var(--text-secondary); font-family: var(--font-body);
+}
+.btn:hover { background: var(--bg-card); border-color: var(--border); color: var(--text-primary); transform: translateY(-1px); }
+.btn.active { background: var(--accent-subtle); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 16px var(--accent-glow); }
+.icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.icon :global(svg) { width: 20px; height: 20px; }
+.name { font-size: 11px; font-weight: 600; white-space: nowrap; line-height: 1.2; }
+.limit { font-size: 10px; font-family: var(--font-mono); color: var(--text-muted); }
+.btn.active .limit { color: var(--accent); }
+
+@media (max-width: 600px) { .grid { grid-template-columns: repeat(3, 1fr); } }
