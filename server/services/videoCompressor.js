@@ -5,6 +5,21 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 /**
+ * Probe a video file to get its duration in seconds.
+ *
+ * @param {string} inputPath  Absolute path to the video file.
+ * @returns {Promise<number>} Duration in seconds (0 if unknown).
+ */
+function getVideoDuration(inputPath) {
+  return new Promise((resolve, reject) => {
+    ffmpeg.ffprobe(inputPath, (err, metadata) => {
+      if (err) return reject(err);
+      resolve(metadata.format.duration || 0);
+    });
+  });
+}
+
+/**
  * Preset definitions.
  * Each preset returns an object with the ffmpeg settings to apply.
  */
@@ -45,7 +60,22 @@ const PRESETS = {
  * @param {function} onProgress  Called with a number 0-100 during encoding.
  * @returns {Promise<void>}
  */
-function compress(inputPath, outputPath, options = {}, onProgress) {
+async function compress(inputPath, outputPath, options = {}, onProgress) {
+  // If targetSize is set, probe duration and calculate bitrate
+  let targetSizeBitrate = null;
+  if (options.targetSize) {
+    const duration = await getVideoDuration(inputPath);
+    if (duration > 0) {
+      const audioBitrateKbps = 128; // default audio bitrate
+      const targetBits = options.targetSize * 8;
+      const videoBitrateKbps = Math.floor(
+        (targetBits / duration - audioBitrateKbps * 1000) / 1000
+      );
+      // Clamp to reasonable range (100kbps minimum)
+      targetSizeBitrate = Math.max(100, videoBitrateKbps);
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const presetName = options.preset || 'medium';
 
@@ -55,7 +85,14 @@ function compress(inputPath, outputPath, options = {}, onProgress) {
       .outputOptions('-movflags', '+faststart')
       .format('mp4');
 
-    if (presetName === 'custom') {
+    if (targetSizeBitrate != null) {
+      // Target size mode: use calculated bitrate instead of CRF/preset
+      command = command
+        .videoBitrate(`${targetSizeBitrate}k`)
+        .audioBitrate('128k')
+        .outputOptions('-maxrate', `${targetSizeBitrate}k`)
+        .outputOptions('-bufsize', `${targetSizeBitrate * 2}k`);
+    } else if (presetName === 'custom') {
       // Custom settings
       if (options.videoBitrate) {
         command = command.videoBitrate(options.videoBitrate);

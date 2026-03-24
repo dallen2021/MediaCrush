@@ -55,6 +55,30 @@
         <span id="file-type-badge" class="file-type-badge">JPEG</span>
       </div>
 
+      <!-- Target Size (Platform Presets) -->
+      <div class="settings-section">
+        <div class="section-header">
+          <h3 class="section-title">Compress For</h3>
+          <span class="section-subtitle">Select a platform to auto-target its file size limit</span>
+        </div>
+        <div id="platform-grid" class="platform-grid">
+          <!-- Buttons rendered by JS -->
+        </div>
+        <div id="target-info" class="target-info hidden">
+          <span class="target-label">Target size:</span>
+          <span id="target-size-display" class="target-size-value">10 MB</span>
+          <button type="button" id="clear-target" class="clear-target-btn">Clear</button>
+        </div>
+      </div>
+
+      <div class="settings-divider"></div>
+
+      <!-- Section header for manual settings -->
+      <div class="section-header">
+        <h3 class="section-title">Manual Settings</h3>
+        <span class="section-subtitle">Or fine-tune compression manually</span>
+      </div>
+
       <!-- Image Settings -->
       <div id="image-settings" class="settings-group">
         <div class="setting-row">

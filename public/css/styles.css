@@ -42,7 +42,7 @@ body {
   font-size: 15px;
   line-height: 1.6;
   color: var(--text-primary);
-  background-color: var(--bg-base);
+  background: linear-gradient(to bottom, rgba(0, 180, 216, 0.03) 0%, transparent 300px), var(--bg-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -140,7 +140,10 @@ header h1 {
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .header-subtitle {
@@ -157,7 +160,7 @@ header h1 {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   padding: 32px;
   margin-top: 20px;
 }
@@ -179,7 +182,7 @@ header h1 {
 
 #upload-zone:hover {
   border-color: var(--accent);
-  background-color: var(--accent-subtle);
+  background: radial-gradient(ellipse at center, rgba(0, 180, 216, 0.08) 0%, transparent 70%), var(--accent-subtle);
 }
 
 #upload-zone.dragover {
@@ -515,19 +518,19 @@ header h1 {
   font-size: 16px;
   font-weight: 600;
   color: #fff;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #0090b0);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
   height: 48px;
   transition:
-    background-color var(--transition-base),
+    background var(--transition-base),
     box-shadow var(--transition-base),
     transform 100ms ease;
 }
 
 .compress-btn:hover {
-  background: var(--accent-hover);
+  background: linear-gradient(135deg, var(--accent-hover), #00a8d0);
   box-shadow: 0 0 24px var(--accent-glow);
 }
 
@@ -603,6 +606,7 @@ header h1 {
   text-align: center;
   margin: 0 auto 24px;
   width: auto;
+  box-shadow: 0 0 20px rgba(0, 180, 216, 0.25);
 }
 
 .savings-badge.savings-good {
@@ -781,6 +785,146 @@ footer p {
   color: var(--text-muted);
 }
 
+/* ----- Section Headers & Dividers ----- */
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.section-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: block;
+}
+
+.settings-section {
+  margin-bottom: 0;
+}
+
+.settings-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  margin: 28px 0;
+}
+
+/* ----- Platform Grid ----- */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  background: var(--bg-surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+.platform-btn:hover {
+  background: var(--bg-card);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.platform-btn.active {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.platform-btn .platform-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.platform-btn .platform-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.platform-btn .platform-name {
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.platform-btn .platform-limit {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.platform-btn.active .platform-limit {
+  color: var(--accent);
+}
+
+/* ----- Target Info Bar ----- */
+.target-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: var(--accent-subtle);
+  border: 1px solid rgba(0, 180, 216, 0.15);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.target-label {
+  color: var(--text-secondary);
+}
+
+.target-size-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.clear-target-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition-base);
+}
+
+.clear-target-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 /* ----- Responsive ----- */
 @media (max-width: 600px) {
   main {
@@ -827,5 +971,9 @@ footer p {
 
   .file-info {
     flex-wrap: wrap;
+  }
+
+  .platform-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

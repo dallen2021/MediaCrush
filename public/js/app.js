@@ -13,6 +13,9 @@ import {
   showError,
   resetUI,
   setCompressButtonLoading,
+  renderPlatformGrid,
+  getSelectedPlatform,
+  clearPlatformSelection,
 } from './ui.js';
 
 // ---------------------------------------------------------------------------
@@ -106,7 +109,35 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
       currentFile = null;
       currentJobId = null;
+      clearPlatformSelection();
       resetUI();
+    });
+  }
+
+  // 8. Platform grid — event delegation for preset buttons
+  const platformGrid = document.getElementById('platform-grid');
+  if (platformGrid) {
+    platformGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.platform-btn');
+      if (!btn) return;
+
+      // Toggle active state
+      document.querySelectorAll('.platform-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show target info
+      const targetInfo = document.getElementById('target-info');
+      const targetDisplay = document.getElementById('target-size-display');
+      if (targetInfo) targetInfo.classList.remove('hidden');
+      if (targetDisplay) targetDisplay.textContent = btn.dataset.limit;
+    });
+  }
+
+  // 9. Clear target button
+  const clearTargetBtn = document.getElementById('clear-target');
+  if (clearTargetBtn) {
+    clearTargetBtn.addEventListener('click', () => {
+      clearPlatformSelection();
     });
   }
 });
@@ -131,6 +162,9 @@ async function handleFileSelected(file) {
     // Thumbnail failed — show info without it
     showFileInfo(info, '');
   }
+
+  // Populate platform presets for this file type
+  renderPlatformGrid(info);
 
   // Show the right settings section
   if (info.isImage) {
@@ -176,6 +210,12 @@ async function handleCompress() {
       if (ab && ab.value) options.audioBitrate = ab.value;
       if (vr && vr.value && vr.value !== 'original') options.resolution = vr.value;
     }
+  }
+
+  // If a platform target is selected, add targetSize to options
+  const selectedPlatform = getSelectedPlatform();
+  if (selectedPlatform) {
+    options.targetSize = selectedPlatform.bytes;
   }
 
   // Show progress
