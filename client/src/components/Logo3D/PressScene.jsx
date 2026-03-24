@@ -1,5 +1,6 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { useTheme } from '../../theme/ThemeProvider';
 
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -8,10 +9,8 @@ function easeInOutCubic(t) {
 export default function PressScene() {
   const pressRef = useRef();
   const letterRef = useRef();
-  const accentColor = useMemo(() => {
-    const style = getComputedStyle(document.documentElement);
-    return style.getPropertyValue('--accent').trim() || '#8b5cf6';
-  }, []);
+  const { theme } = useTheme();
+  const accentColor = theme['--accent'] || '#8b5cf6';
 
   // Layout constants
   const baseY = 0;            // base plate top surface
